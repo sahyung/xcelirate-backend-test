@@ -1,0 +1,4 @@
+suites:
+    default:
+        namespace: App
+        psr-4_prefix: App

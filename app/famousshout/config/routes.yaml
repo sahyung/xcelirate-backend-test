@@ -1,0 +1,17 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+shout:
+  path: /shout/{author}
+  controller: App\Controller\ShoutquoteController::shout
+  methods: GET
+
+list:
+  path: /list
+  controller: App\Controller\ShoutquoteController::list
+  methods: GET
+
+init:
+  path: /init
+  controller: App\Controller\InitController::inittable
+  methods: POST

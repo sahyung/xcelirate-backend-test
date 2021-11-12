@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Build & start docker image
+docker-compose build
+docker-compose up -d
+
+# For UNIX systems the hosts file needs to be updated as such to access the containers, will skip and just log the user automatically in the container for the scope of the build
+#sudo echo $(docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+') "symfony.dev" >> /etc/hosts
+
+# For Windows Docker IP can be obtained by, and then updating the system32/drivers/etc/hosts file with symfony.dev name
+#docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+'
+
+# Configure hosts file manually (had to configure manually between php & nginx to make sure nginx was accessible for every build)
+ip="$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_nginx)"
+docker-compose exec php echo "${ip}    symfony.dev" >> /etc/hosts
+
+# Supervisor safe start (made to combat stale sockets)
+docker-compose exec php service supervisor start messenger-consume:*
+
+# App init
+docker-compose exec php composer install
+docker-compose exec php symfony doctrine:schema:drop --force
+docker-compose exec php symfony make:migration
+docker-compose exec php symfony doctrine:migrations:migrate
+docker-compose exec php curl -X POST http://symfony.dev/init
+docker-compose exec php echo " You can just curl the app with your favorite author!"
+docker-compose exec php bash

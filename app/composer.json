@@ -1,0 +1,10 @@
+{
+    "require-dev": {
+        "symfony/maker-bundle": "^1.29"
+    },
+    "require": {
+        "symfony/messenger": "^5.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "predis/predis": "^1.1"
+    }
+}

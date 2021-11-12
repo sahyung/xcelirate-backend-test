@@ -1,0 +1,4 @@
+suites:
+    default:
+        namespace: Tests
+        psr-4_prefix: Tests

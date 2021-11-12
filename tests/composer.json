@@ -1,0 +1,16 @@
+{
+    "require-dev": {
+        "phpspec/phpspec": "^7.0",
+        "behat/behat": "^3.8"
+    },
+    "autoload": {
+        "psr-0": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "spec\\": "spec/"
+        }
+    }
+}
